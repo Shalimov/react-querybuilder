@@ -1,7 +1,7 @@
 import { mount, shallow } from 'enzyme';
 import React from 'react';
 import sinon from 'sinon';
-import { ActionElement, ValueEditor, ValueSelector } from './controls/index';
+import { ActionElement, ValueEditor, ValueSelector, RuleSection } from './controls/index';
 import Rule from './Rule';
 
 describe('<Rule />', () => {
@@ -9,6 +9,7 @@ describe('<Rule />', () => {
   beforeEach(() => {
     //set defaults
     controls = {
+      ruleSection: RuleSection,
       fieldSelector: (props) => (
         <select onChange={(e) => props.handleOnChange(e.target.value)}>
           <option value="field">Field</option>
@@ -108,7 +109,7 @@ describe('<Rule />', () => {
         { name: 'secondName', label: 'Second Label' }
       ];
       schema.fields = expected_fields;
-      const dom = shallow(<Rule {...props} />);
+      const dom = mount(<Rule {...props} />);
 
       expect(dom.find('ValueSelector').props().options).to.equal(expected_fields);
     });
@@ -126,14 +127,14 @@ describe('<Rule />', () => {
       schema.getOperators = (field) => {
         return expected_operators;
       };
-      const dom = shallow(<Rule {...props} />);
+      const dom = mount(<Rule {...props} />);
 
       expect(dom.find('ValueSelector').props().options).to.equal(expected_operators);
     });
 
     it('should have field set to selected field', () => {
       props.field = 'selected_field';
-      const dom = shallow(<Rule {...props} />);
+      const dom = mount(<Rule {...props} />);
 
       expect(dom.find('ValueSelector').props().field).to.equal('selected_field');
     });
@@ -148,14 +149,14 @@ describe('<Rule />', () => {
 
     it('should have field set to selected field', () => {
       props.field = 'selected_field';
-      const dom = shallow(<Rule {...props} />);
+      const dom = mount(<Rule {...props} />);
 
       expect(dom.find('ValueEditor').props().field).to.equal('selected_field');
     });
 
     it('should have fieldData set to selected field data', () => {
       props.field = 'field1';
-      const dom = shallow(<Rule {...props} />);
+      const dom = mount(<Rule {...props} />);
 
       expect(dom.find('ValueEditor').props().fieldData.name).to.equal('field1');
       expect(dom.find('ValueEditor').props().fieldData.label).to.equal('Field 1');
@@ -163,20 +164,20 @@ describe('<Rule />', () => {
 
     it('should have operator set to selected operator', () => {
       props.operator = 'selected_operator';
-      const dom = shallow(<Rule {...props} />);
+      const dom = mount(<Rule {...props} />);
 
       expect(dom.find('ValueEditor').props().operator).to.equal('selected_operator');
     });
 
     it('should have value set to specified value', () => {
       props.value = 'specified_value';
-      const dom = shallow(<Rule {...props} />);
+      const dom = mount(<Rule {...props} />);
 
       expect(dom.find('ValueEditor').props().value).to.equal('specified_value');
     });
 
     it('should have the onChange method handler', () => {
-      const dom = shallow(<Rule {...props} />);
+      const dom = mount(<Rule {...props} />);
 
       expect(dom.find('ValueEditor').props().handleOnChange).to.be.a('function');
     });
@@ -197,23 +198,23 @@ describe('<Rule />', () => {
     });
 
     it('should have label set to "x"', () => {
-      const dom = shallow(<Rule {...props} />);
+      const dom = mount(<Rule {...props} />);
 
       expect(dom.find('ActionElement').props().label).to.equal('x');
     });
 
     it('should have the default className', () => {
-      const dom = shallow(<Rule {...props} />);
+      const dom = mount(<Rule {...props} />);
       expect(dom.find('ActionElement').props().className).to.contain('rule-remove');
     });
 
     it('should have the custom className', () => {
-      const dom = shallow(<Rule {...props} />);
+      const dom = mount(<Rule {...props} />);
       expect(dom.find('ActionElement').props().className).to.contain('custom-removeRule-class');
     });
 
     it('should have the onChange method handler', () => {
-      const dom = shallow(<Rule {...props} />);
+      const dom = mount(<Rule {...props} />);
 
       expect(dom.find('ActionElement').props().handleOnClick).to.be.a('function');
     });
@@ -282,27 +283,27 @@ describe('<Rule />', () => {
 
   function behavesLikeASelector(value, defaultClassName, customClassName) {
     it('should have the selected value set correctly', () => {
-      const dom = shallow(<Rule {...props} />);
+      const dom = mount(<Rule {...props} />);
       expect(dom.find('ValueSelector').props().value).to.equal(value);
     });
 
     it('should have the default className', () => {
-      const dom = shallow(<Rule {...props} />);
+      const dom = mount(<Rule {...props} />);
       expect(dom.find('ValueSelector').props().className).to.contain(defaultClassName);
     });
 
     it('should have the custom className', () => {
-      const dom = shallow(<Rule {...props} />);
+      const dom = mount(<Rule {...props} />);
       expect(dom.find('ValueSelector').props().className).to.contain(customClassName);
     });
 
     it('should have the onChange method handler', () => {
-      const dom = shallow(<Rule {...props} />);
+      const dom = mount(<Rule {...props} />);
       expect(dom.find('ValueSelector').props().handleOnChange).to.be.a('function');
     });
 
     it('should have the level of the Rule', () => {
-      const dom = shallow(<Rule {...props} />);
+      const dom = mount(<Rule {...props} />);
       expect(dom.find('ValueSelector').props().level).to.equal(0);
     });
   }

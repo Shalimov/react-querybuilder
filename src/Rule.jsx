@@ -45,46 +45,56 @@ const Rule = ({
 
   const fieldData = fields.find((f) => f.name === field) || null;
   const level = getLevel(id);
+  const fieldSelectorProps = {
+    level,
+    options: fields,
+    value: field,
+    title: translations.fields.title,
+    className: `rule-fields ${classNames.fields}`,
+    handleOnChange: onFieldChanged,
+  }
+
+  const operatorSelector = {
+    field,
+    fieldData,
+    title: translations.operators.title,
+    options: getOperators(field),
+    value: operator,
+    className: `rule-operators ${classNames.operators}`,
+    handleOnChange: onOperatorChanged,
+    level,
+  }
+
+  const valueEditorProps = {
+    field,
+    fieldData,
+    title: translations.value.title,
+    operator,
+    value,
+    type: getValueEditorType(field, operator),
+    inputType: getInputType(field, operator),
+    values: getValues(field, operator),
+    className: `rule-value ${classNames.value}`,
+    handleOnChange: onValueChanged,
+    level,
+  }
+
+  const removeRuleActionProps = {
+    level,
+    label: translations.removeRule.label,
+    title: translations.removeRule.title,
+    className: `rule-remove ${classNames.removeRule}`,
+    handleOnClick: removeRule,
+  }
 
   return (
     <div className={`rule ${classNames.rule}`} data-rule-id={id} data-level={level}>
-      <controls.fieldSelector
-        options={fields}
-        title={translations.fields.title}
-        value={field}
-        className={`rule-fields ${classNames.fields}`}
-        handleOnChange={onFieldChanged}
-        level={level}
-      />
-      <controls.operatorSelector
-        field={field}
-        fieldData={fieldData}
-        title={translations.operators.title}
-        options={getOperators(field)}
-        value={operator}
-        className={`rule-operators ${classNames.operators}`}
-        handleOnChange={onOperatorChanged}
-        level={level}
-      />
-      <controls.valueEditor
-        field={field}
-        fieldData={fieldData}
-        title={translations.value.title}
-        operator={operator}
-        value={value}
-        type={getValueEditorType(field, operator)}
-        inputType={getInputType(field, operator)}
-        values={getValues(field, operator)}
-        className={`rule-value ${classNames.value}`}
-        handleOnChange={onValueChanged}
-        level={level}
-      />
-      <controls.removeRuleAction
-        label={translations.removeRule.label}
-        title={translations.removeRule.title}
-        className={`rule-remove ${classNames.removeRule}`}
-        handleOnClick={removeRule}
-        level={level}
+      <controls.ruleSection
+        fieldSelectorProps={fieldSelectorProps}
+        operatorSelector={operatorSelector}
+        valueEditorProps={valueEditorProps}
+        removeRuleActionProps={removeRuleActionProps}
+        controls={controls}
       />
     </div>
   );

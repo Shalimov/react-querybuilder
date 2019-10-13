@@ -1,8 +1,9 @@
+import React, { useEffect, useState } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
 import nanoid from 'nanoid';
-import { ActionElement, NotToggle, ValueEditor, ValueSelector } from './controls';
+
+import { ActionElement, NotToggle, ValueEditor, ValueSelector, RuleSection } from './controls';
 import RuleGroup from './RuleGroup';
 import { findRule, generateValidQuery, getLevel, isRuleGroup } from './utils';
 
@@ -113,6 +114,7 @@ const defaultControlClassnames = {
 };
 
 const defaultControlElements = {
+  ruleSection: RuleSection,
   addGroupAction: ActionElement,
   removeGroupAction: ActionElement,
   addRuleAction: ActionElement,
@@ -395,6 +397,7 @@ QueryBuilder.propTypes = {
     PropTypes.shape({ name: PropTypes.string, label: PropTypes.string })
   ),
   controlElements: PropTypes.shape({
+    ruleSection: PropTypes.func,
     addGroupAction: PropTypes.func,
     removeGroupAction: PropTypes.func,
     addRuleAction: PropTypes.func,
