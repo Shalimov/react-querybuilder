@@ -38009,6 +38009,8 @@ var RuleGroup = function RuleGroup(_ref) {
     className: "ruleGroup ".concat(classNames.ruleGroup),
     "data-rule-group-id": id,
     "data-level": level
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "ruleGroupControls"
   }, showCombinatorsBetweenRules ? null : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(controls.combinatorSelector, {
     options: combinators,
     value: combinator,
@@ -38043,7 +38045,9 @@ var RuleGroup = function RuleGroup(_ref) {
     handleOnClick: removeGroup,
     rules: rules,
     level: level
-  }) : null, rules.map(function (r, idx) {
+  }) : null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "rules"
+  }, rules.map(function (r, idx) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], {
       key: r.id
     }, idx && showCombinatorsBetweenRules ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(controls.combinatorSelector, {
@@ -38070,7 +38074,7 @@ var RuleGroup = function RuleGroup(_ref) {
       parentId: id,
       translations: translations
     }));
-  }));
+  })));
 };
 
 RuleGroup.defaultProps = {
