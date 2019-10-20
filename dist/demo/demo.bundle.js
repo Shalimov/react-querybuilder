@@ -38010,6 +38010,38 @@ var RuleGroup = function RuleGroup(_ref) {
     "data-rule-group-id": id,
     "data-level": level
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "rules"
+  }, rules.map(function (r, idx) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], {
+      key: r.id
+    }, idx && showCombinatorsBetweenRules ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "ruleGroup-combinators betweenRules-container"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(controls.combinatorSelector, {
+      options: combinators,
+      value: combinator,
+      combinatorIdx: idx,
+      title: translations.combinators.title,
+      className: "ruleGroup-combinators betweenRules ".concat(classNames.combinators),
+      handleOnChange: onCombinatorChange,
+      rules: rules,
+      level: level
+    })) : null, isRuleGroup(r) ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RuleGroup, {
+      id: r.id,
+      schema: schema,
+      parentId: id,
+      combinator: r.combinator,
+      translations: translations,
+      rules: r.rules
+    }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Rule__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      id: r.id,
+      field: r.field,
+      value: r.value,
+      operator: r.operator,
+      schema: schema,
+      parentId: id,
+      translations: translations
+    }));
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "ruleGroupControls"
   }, showCombinatorsBetweenRules ? null : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(controls.combinatorSelector, {
     options: combinators,
@@ -38045,36 +38077,7 @@ var RuleGroup = function RuleGroup(_ref) {
     handleOnClick: removeGroup,
     rules: rules,
     level: level
-  }) : null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "rules"
-  }, rules.map(function (r, idx) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], {
-      key: r.id
-    }, idx && showCombinatorsBetweenRules ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(controls.combinatorSelector, {
-      options: combinators,
-      value: combinator,
-      title: translations.combinators.title,
-      className: "ruleGroup-combinators betweenRules ".concat(classNames.combinators),
-      handleOnChange: onCombinatorChange,
-      rules: rules,
-      level: level
-    }) : null, isRuleGroup(r) ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RuleGroup, {
-      id: r.id,
-      schema: schema,
-      parentId: id,
-      combinator: r.combinator,
-      translations: translations,
-      rules: r.rules
-    }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Rule__WEBPACK_IMPORTED_MODULE_1__["default"], {
-      id: r.id,
-      field: r.field,
-      value: r.value,
-      operator: r.operator,
-      schema: schema,
-      parentId: id,
-      translations: translations
-    }));
-  })));
+  }) : null));
 };
 
 RuleGroup.defaultProps = {
