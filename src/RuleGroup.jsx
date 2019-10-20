@@ -55,6 +55,46 @@ const RuleGroup = ({ id, parentId, combinator, rules, translations, schema, not 
 
   return (
     <div className={`ruleGroup ${classNames.ruleGroup}`} data-rule-group-id={id} data-level={level}>
+      <div className="rules">
+        {rules.map((r, idx) => (
+          <Fragment key={r.id}>
+            {idx && showCombinatorsBetweenRules ? (
+              <div className="ruleGroup-combinators betweenRules-container">
+              <controls.combinatorSelector
+                options={combinators}
+                value={combinator}
+                combinatorIdx={idx}
+                title={translations.combinators.title}
+                className={`ruleGroup-combinators betweenRules ${classNames.combinators}`}
+                handleOnChange={onCombinatorChange}
+                rules={rules}
+                level={level}
+              />
+              </div>
+            ) : null}
+            {isRuleGroup(r) ? (
+              <RuleGroup
+                id={r.id}
+                schema={schema}
+                parentId={id}
+                combinator={r.combinator}
+                translations={translations}
+                rules={r.rules}
+              />
+            ) : (
+                <Rule
+                  id={r.id}
+                  field={r.field}
+                  value={r.value}
+                  operator={r.operator}
+                  schema={schema}
+                  parentId={id}
+                  translations={translations}
+                />
+              )}
+          </Fragment>
+        ))}
+      </div>
       <div className="ruleGroupControls">
         {showCombinatorsBetweenRules ? null : (
           <controls.combinatorSelector
@@ -101,43 +141,6 @@ const RuleGroup = ({ id, parentId, combinator, rules, translations, schema, not 
             level={level}
           />
         ) : null}
-      </div>
-      <div className="rules">
-        {rules.map((r, idx) => (
-          <Fragment key={r.id}>
-            {idx && showCombinatorsBetweenRules ? (
-              <controls.combinatorSelector
-                options={combinators}
-                value={combinator}
-                title={translations.combinators.title}
-                className={`ruleGroup-combinators betweenRules ${classNames.combinators}`}
-                handleOnChange={onCombinatorChange}
-                rules={rules}
-                level={level}
-              />
-            ) : null}
-            {isRuleGroup(r) ? (
-              <RuleGroup
-                id={r.id}
-                schema={schema}
-                parentId={id}
-                combinator={r.combinator}
-                translations={translations}
-                rules={r.rules}
-              />
-            ) : (
-                <Rule
-                  id={r.id}
-                  field={r.field}
-                  value={r.value}
-                  operator={r.operator}
-                  schema={schema}
-                  parentId={id}
-                  translations={translations}
-                />
-              )}
-          </Fragment>
-        ))}
       </div>
     </div>
   );
