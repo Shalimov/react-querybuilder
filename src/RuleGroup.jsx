@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import Rule from './Rule';
 
-const RuleGroup = ({ id, parentId, combinator, rules, translations, schema, not }) => {
+const RuleGroup = ({ id, parentId, combinator, rules, translations, schema, not, oneRuleByDefault }) => {
   const {
     classNames,
     combinators,
@@ -53,6 +53,13 @@ const RuleGroup = ({ id, parentId, combinator, rules, translations, schema, not 
 
   const level = getLevel(id);
 
+  useEffect(() => {
+    if (oneRuleByDefault) {
+      const newRule = createRule();
+      onRuleAdd(newRule, id);
+    }
+  }, [id])
+
   return (
     <div className={`ruleGroup ${classNames.ruleGroup}`} data-rule-group-id={id} data-level={level}>
       <div className="rules">
@@ -60,16 +67,16 @@ const RuleGroup = ({ id, parentId, combinator, rules, translations, schema, not 
           <Fragment key={r.id}>
             {idx && showCombinatorsBetweenRules ? (
               <div className="ruleGroup-combinators betweenRules-container">
-              <controls.combinatorSelector
-                options={combinators}
-                value={combinator}
-                combinatorIdx={idx}
-                title={translations.combinators.title}
-                className={`ruleGroup-combinators betweenRules ${classNames.combinators}`}
-                handleOnChange={onCombinatorChange}
-                rules={rules}
-                level={level}
-              />
+                <controls.combinatorSelector
+                  options={combinators}
+                  value={combinator}
+                  combinatorIdx={idx}
+                  title={translations.combinators.title}
+                  className={`ruleGroup-combinators betweenRules ${classNames.combinators}`}
+                  handleOnChange={onCombinatorChange}
+                  rules={rules}
+                  level={level}
+                />
               </div>
             ) : null}
             {isRuleGroup(r) ? (

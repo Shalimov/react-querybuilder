@@ -358,6 +358,7 @@ const QueryBuilder = (props) => {
   return (
     <div className={`queryBuilder ${schema.classNames.queryBuilder}`}>
       <RuleGroup
+        oneRuleByDefault={props.oneRuleByDefault}
         translations={{ ...defaultTranslations, ...props.translations }}
         rules={root.rules}
         combinator={root.combinator}
