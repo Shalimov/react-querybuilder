@@ -133,7 +133,7 @@ const getValues = (field, operator) => {
 };
 
 const RootView = () => {
-  const [query, setQuery] = useState(preparedQueries.primary);
+  const [query, setQuery] = useState();
   const [fields, setFields] = useState(preparedFields.primary);
   const [format, setFormat] = useState('json');
   const [showCombinatorsBetweenRules, setShowCombinatorsBetweenRules] = useState(false);
@@ -185,6 +185,7 @@ const RootView = () => {
       <div className="flex-box">
         <div className="scroll">
           <QueryBuilder
+            oneRuleByDefault
             query={query}
             fields={fields}
             controlClassnames={{ fields: 'form-control' }}

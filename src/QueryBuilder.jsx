@@ -246,6 +246,11 @@ const QueryBuilder = (props) => {
   const onGroupAdd = (group, parentId) => {
     const rootCopy = { ...root };
     const parent = findRule(parentId, rootCopy);
+
+    if (props.oneRuleByDefault) {
+      group.rules.push(createRule())
+    }
+
     parent.rules.push(group);
     setRoot(rootCopy);
     _notifyQueryChange(rootCopy);
@@ -355,10 +360,15 @@ const QueryBuilder = (props) => {
     _notifyQueryChange(root);
   }, []);
 
+  useEffect(() => {
+    if (props.oneRuleByDefault) {
+      onRuleAdd(createRule(), root.id)
+    }
+  }, [root.id])
+
   return (
     <div className={`queryBuilder ${schema.classNames.queryBuilder}`}>
       <RuleGroup
-        oneRuleByDefault={props.oneRuleByDefault}
         translations={{ ...defaultTranslations, ...props.translations }}
         rules={root.rules}
         combinator={root.combinator}

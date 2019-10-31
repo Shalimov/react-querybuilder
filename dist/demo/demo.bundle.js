@@ -275,7 +275,7 @@ var getValues = function getValues(field, operator) {
 };
 
 var RootView = function RootView() {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(preparedQueries.primary),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(),
       _useState2 = _slicedToArray(_useState, 2),
       query = _useState2[0],
       setQuery = _useState2[1];
@@ -353,6 +353,7 @@ var RootView = function RootView() {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "scroll"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_src__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    oneRuleByDefault: true,
     query: query,
     fields: fields,
     controlClassnames: {
@@ -37622,6 +37623,11 @@ var QueryBuilder = function QueryBuilder(props) {
     var rootCopy = _objectSpread({}, root);
 
     var parent = Object(_utils__WEBPACK_IMPORTED_MODULE_6__["findRule"])(parentId, rootCopy);
+
+    if (props.oneRuleByDefault) {
+      group.rules.push(createRule());
+    }
+
     parent.rules.push(group);
     setRoot(rootCopy);
 
@@ -37746,10 +37752,14 @@ var QueryBuilder = function QueryBuilder(props) {
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     _notifyQueryChange(root);
   }, []);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (props.oneRuleByDefault) {
+      onRuleAdd(createRule(), root.id);
+    }
+  }, [root.id]);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "queryBuilder ".concat(schema.classNames.queryBuilder)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_RuleGroup__WEBPACK_IMPORTED_MODULE_5__["default"], {
-    oneRuleByDefault: props.oneRuleByDefault,
     translations: _objectSpread({}, defaultTranslations, {}, props.translations),
     rules: root.rules,
     combinator: root.combinator,
@@ -37958,8 +37968,7 @@ var RuleGroup = function RuleGroup(_ref) {
       rules = _ref.rules,
       translations = _ref.translations,
       schema = _ref.schema,
-      not = _ref.not,
-      oneRuleByDefault = _ref.oneRuleByDefault;
+      not = _ref.not;
   var classNames = schema.classNames,
       combinators = schema.combinators,
       controls = schema.controls,
@@ -38007,12 +38016,6 @@ var RuleGroup = function RuleGroup(_ref) {
   };
 
   var level = getLevel(id);
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    if (oneRuleByDefault) {
-      var newRule = createRule();
-      onRuleAdd(newRule, id);
-    }
-  }, [id]);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "ruleGroup ".concat(classNames.ruleGroup),
     "data-rule-group-id": id,

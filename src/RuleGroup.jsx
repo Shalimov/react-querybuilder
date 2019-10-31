@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import Rule from './Rule';
 
-const RuleGroup = ({ id, parentId, combinator, rules, translations, schema, not, oneRuleByDefault }) => {
+const RuleGroup = ({ id, parentId, combinator, rules, translations, schema, not }) => {
   const {
     classNames,
     combinators,
@@ -52,13 +52,6 @@ const RuleGroup = ({ id, parentId, combinator, rules, translations, schema, not,
   };
 
   const level = getLevel(id);
-
-  useEffect(() => {
-    if (oneRuleByDefault) {
-      const newRule = createRule();
-      onRuleAdd(newRule, id);
-    }
-  }, [id])
 
   return (
     <div className={`ruleGroup ${classNames.ruleGroup}`} data-rule-group-id={id} data-level={level}>
