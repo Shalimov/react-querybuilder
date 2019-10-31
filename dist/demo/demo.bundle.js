@@ -37749,6 +37749,7 @@ var QueryBuilder = function QueryBuilder(props) {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "queryBuilder ".concat(schema.classNames.queryBuilder)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_RuleGroup__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    oneRuleByDefault: props.oneRuleByDefault,
     translations: _objectSpread({}, defaultTranslations, {}, props.translations),
     rules: root.rules,
     combinator: root.combinator,
@@ -37957,7 +37958,8 @@ var RuleGroup = function RuleGroup(_ref) {
       rules = _ref.rules,
       translations = _ref.translations,
       schema = _ref.schema,
-      not = _ref.not;
+      not = _ref.not,
+      oneRuleByDefault = _ref.oneRuleByDefault;
   var classNames = schema.classNames,
       combinators = schema.combinators,
       controls = schema.controls,
@@ -38005,6 +38007,12 @@ var RuleGroup = function RuleGroup(_ref) {
   };
 
   var level = getLevel(id);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (oneRuleByDefault) {
+      var newRule = createRule();
+      onRuleAdd(newRule, id);
+    }
+  }, [id]);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "ruleGroup ".concat(classNames.ruleGroup),
     "data-rule-group-id": id,
